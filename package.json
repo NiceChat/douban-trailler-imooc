@@ -1,0 +1,23 @@
+{
+  "name": "douban-trailler-imooc",
+  "version": "1.0.0",
+  "description": "koa ",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:nicechat/douban-trailler-imooc.git"
+  },
+  "keywords": [
+    "movie",
+    "trailer"
+  ],
+  "author": "Yangleilei",
+  "license": "ISC",
+  "devDependencies": {
+    "koa": "^2.5.1"
+  }
+}
