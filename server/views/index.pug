@@ -4,11 +4,133 @@ block title
   title #{title}
   
 block content
-  .container
-    .card
-      .card-body
-        .card-title Title
-        .card-text 这是文本内容2
-        a.btn.btn-primary #{name}
+  style.
+    header {
+      position: relative;
+      z-index: 99;
+      background: #fff;
+      box-shadow: 0px 3px 3px rgba(0,0,0, .2); 
+    }
 
+    .card {
+      margin-top: 20px;
+    }
 
+    .card img {
+      cursor: pointer;
+    }
+
+    .sidebar {
+      width: 120px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      font-size: 12px;
+      height: 100%;
+      border-right: 1px #f2f2f2 solid;
+      z-index: 9;
+    }
+
+    .sidebar .nav {
+      margin-top: 300px;
+    }
+
+    .content {
+      padding-left: 120px;
+    }
+  include ./includes/header
+
+  .container-fluid
+    .sidebar
+      ul.nav.flex-column
+        li.nav-item
+          a.nav-link(href="#") 10s
+        li.nav-item
+          a.nav-link.active(href="#") 00s 
+        li.nav-item
+          a.nav-link.active(href="#") 90s 
+        li.nav-item
+          a.nav-link.active(href="#") 80s 
+        li.nav-item
+          a.nav-link.active(href="#") 70s 
+      </ul>
+    .content
+      .row
+        .col-md-6
+          .card
+            img.card-img-top(src="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.png" data-video="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.mp4") 
+            .card-body
+              h4.card-title 电影标题 
+              p.card-desc 电影描述
+            .card-footer
+              small.text-muted 1天前更新
+        .col-md-6
+          .card
+            img.card-img-top(src="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.png" data-video="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.mp4") 
+            .card-body
+              h4.card-title 电影标题 
+              p.card-desc 电影描述
+            .card-footer
+              small.text-muted 1天前更新
+      .row
+        .col-md-6
+          .card
+            img.card-img-top(src="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.png" data-video="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.mp4") 
+            .card-body
+              h4.card-title 电影标题 
+              p.card-desc 电影描述
+            .card-footer
+              small.text-muted 1天前更新
+        .col-md-6
+          .card
+            img.card-img-top(src="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.png" data-video="https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.mp4") 
+            .card-body
+              h4.card-title 电影标题 
+              p.card-desc 电影描述
+            .card-footer
+              small.text-muted 1天前更新
+  #videoModal.modal
+    .modal-dialog.modal-lg
+      .modal-content
+        h5.modal-title
+        .modal-body
+          #dplayer
+  include ./includes/script
+  script.
+    var player = null
+    $(document).ready(function() {
+      $('#videoModal').on('hidden.bs.modal', function(e) {
+        player.pause()
+      })
+
+      //- $('#videoModal').on('hidden.bs.modal', function (e) {
+      //-   // do something...
+      //- })
+
+      $('.card-img-top').click(function() {
+        var img = $(this).attr('src')
+        var video = $(this).data('video')
+        
+        $('#videoModal').modal('show')
+
+        if (!player) {
+          player = new DPlayer({
+            container: document.getElementById('dplayer'),
+            screenshot: true,
+            video: {
+              url: video,
+              pic: img,
+              thumbnails: img
+            },
+          })    
+        } else {
+          player.switchVideo({
+            url: video,
+            pic: image,
+            type: 'auto',
+          })
+        }
+
+        player.play()
+      })
+    })
