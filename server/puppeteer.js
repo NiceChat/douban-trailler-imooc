@@ -41,7 +41,7 @@ const sleep = time => new Promise(reslove => {
 
     return links
   })
-
-  console.log(result)
   await browser.close()
+  process.send({result})
+  process.exit(0)
 })()
