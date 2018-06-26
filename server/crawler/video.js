@@ -20,22 +20,24 @@ const sleep = time => new Promise(reslove => {
 
     if ($cover) {
       var link = $cover.attr('href')
-      var cover = $cover.css('backgroundImage')
+      var bg = $cover.css('backgroundImage')
       var reg = /https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\?)?=?&?[a-zA-Z0-9_-](\?)?)*)*/gi
 
+      console.log('获取封面图')
       return {
         link,
-        cover: cover.match(reg)[0]
+        cover: bg.match(reg)[0]
       } 
     }
 
     return {}
   })
 
-  let video 
+  let video
   if (cover.link) {
     await page.goto(cover.link, {waitUntil: 'networkidle2'})
     await sleep(2000)
+    console.log('获取预告片')
 
     video =  await page.evaluate(() => {
       var $ = window.$
@@ -54,8 +56,8 @@ const sleep = time => new Promise(reslove => {
     cover: cover.cover,
     video: video 
   }
-  await browser.close()
 
-  process.send({data})
+  await browser.close()
+  process.send(data)
   process.exit(0)
 })()

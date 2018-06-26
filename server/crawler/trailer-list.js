@@ -1,3 +1,4 @@
+// 爬去电影列表
 const puppeteer = require('puppeteer')
 const url = `https://movie.douban.com/tag/#/?sort=R&range=0,10&tags=`
 
@@ -32,10 +33,10 @@ const sleep = time => new Promise(reslove => {
       let pic = it.find('.pic img').attr('src').replace('s_ratio', 'l_ratio')
 
       links.push({
-        id,
+        doubanId: id,
         title,
         rate,
-        pic
+        poster: pic
       })
     })
 
