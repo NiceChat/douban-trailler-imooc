@@ -10,6 +10,7 @@ const sleep = time => new Promise(reslove => {
   console.log('Start visit the target page.')
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
+  
   await page.goto(url, {waitUntil: 'networkidle2'})
   await sleep(3000)
 
