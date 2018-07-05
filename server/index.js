@@ -1,5 +1,18 @@
 const Koa = require('koa')
+const mongoose = require('mongoose')
 const { resolve } = require('path')
+const { connect, initSchemas } = require('./database/init')
+
+// 等待数据库连接
+;(async () => {
+  await connect()
+  initSchemas()
+
+  const Moive = mongoose.model('Moive')
+  const moives = await Moive.find({})  
+  console.log(moives)
+})()
+
 const app = new Koa()
 // const { htmlTpl } = require('./tpl')
 // const { ejsTpl } = require('./tpl')

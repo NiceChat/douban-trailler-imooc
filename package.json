@@ -21,10 +21,13 @@
   "devDependencies": {
     "koa": "^2.5.1",
     "koa-static": "^5.0.0",
+    "mongoose": "^5.2.1",
     "nodemon": "^1.17.5"
   },
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "ejs": "^2.6.1",
+    "glob": "^7.1.2",
     "koa-views": "^6.1.4",
     "nanoid": "^1.0.4",
     "pug": "^2.0.3",
