@@ -34,9 +34,6 @@ const connect = () => {
     })
 
     mongoose.connection.once('open', () => {
-      // const Cat = mongoose.model('Cat', { name: String });
-      // const kitty = new Cat({ name: 'Yangleilei' });
-      // kitty.save().then(() => console.log('nice'));
       console.log('mongoDB Connected Successful!')
       resolve()
     })

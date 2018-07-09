@@ -44,12 +44,12 @@ const userSchema = new Schema({
 })  
 
 // 设置虚拟字段
-userSchema.virtual('isLocked').get(() => {
+userSchema.virtual('isLocked').get(function() {
   return !!(this.lockUntil && this.lockUntil > Date.now())
 })
 
 // 更新创建日期
-userSchema.pre('save', next => {
+userSchema.pre('save', function(next) {
   if (this.isNew) {
     this.createTime = this.updateTime = Date.now()
   } else {
@@ -60,7 +60,7 @@ userSchema.pre('save', next => {
 })
 
 // 加盐加密
-userSchema.pre('save', next => {
+userSchema.pre('save', function(next) {
   if (!this.isModified('password')) next()
 
   bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
@@ -75,7 +75,7 @@ userSchema.pre('save', next => {
 
 // 挂载在schema上的方法
 userSchema.methods = {
-  comparePassword: (_password, password) => {
+  comparePassword: function(_password, password) {
     return new Promise((resolve, reject) => {
       bcrypt.compare(_password, password, (err, isMatch) => {
         if (!error) resolve(isMatch)
@@ -85,7 +85,7 @@ userSchema.methods = {
   },
 
   // 判断当前用户是否超过登录次数
-  incLoginTimes: (user) => {
+  incLoginTimes: function (user) {
     return new Promise((resolve, reject) => {
       if (this.lockUntil && this.lockUntil < Date.now()) {
         this.update({

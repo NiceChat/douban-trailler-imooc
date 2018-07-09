@@ -16,10 +16,10 @@ const sleep = time => new Promise(reslove => {
 
   await page.waitForSelector('.more')
 
-  for(let i = 0; i <= 1; i++) {
-    await sleep(1000)
-    await page.click('.more')
-  }
+  // for(let i = 0; i <= 1; i++) {
+  //   await sleep(1000)
+  //   await page.click('.more')
+  // }
 
   const result = await page.evaluate(() => {
     var $ = window.$

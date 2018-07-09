@@ -8,9 +8,10 @@ const { connect, initSchemas } = require('./database/init')
   await connect()
   initSchemas()
 
-  const Moive = mongoose.model('Moive')
-  const moives = await Moive.find({})  
-  console.log(moives)
+  // const Moive = mongoose.model('Moive')
+  // const moives = await Moive.find({})  
+  // console.log(moives)
+  require('./tasks/moive')
 })()
 
 const app = new Koa()

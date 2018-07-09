@@ -23,4 +23,14 @@ const categorySchema = new Schema({
   }
 })  
 
+categorySchema.pre('save', function (next) {
+  if (this.isNew) {
+    this.createTime = this.updateTime = Date.now()
+  } else {
+    this.updateTime = Date.now()
+  } 
+
+  next()
+})
+
 mongoose.model('Category', categorySchema)
