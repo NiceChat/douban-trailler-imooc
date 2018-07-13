@@ -65,8 +65,8 @@ userSchema.pre('save', function(next) {
 
   bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
     if (err) next(err)
-    bcrypt.hash(this.password, salt, function(error, hash) {
-      if (error) next(err)
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) next(err)
       this.password = hash
       next()
     })
@@ -76,7 +76,7 @@ userSchema.pre('save', function(next) {
 // 挂载在schema上的方法
 userSchema.methods = {
   comparePassword: function(_password, password) {
-    return new Promise((resolve, reject) => {
+    return new Promise( (resolve, reject) => {
       bcrypt.compare(_password, password, (err, isMatch) => {
         if (!error) resolve(isMatch)
         else reject(err)
@@ -86,7 +86,7 @@ userSchema.methods = {
 
   // 判断当前用户是否超过登录次数
   incLoginTimes: function (user) {
-    return new Promise((resolve, reject) => {
+    return new Promise( (resolve, reject) => {
       if (this.lockUntil && this.lockUntil < Date.now()) {
         this.update({
           $set: {

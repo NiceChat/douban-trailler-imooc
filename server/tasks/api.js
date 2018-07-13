@@ -1,32 +1,73 @@
 const rq = require('request-promise-native')
+const mongoose = require('mongoose')
+const Movie = mongoose.model('Movie')
+const Category = mongoose.model('Category')
 
 const fetch = async (id) => {
-  const url = `https://api.douban.com/v2/movie/subject/${id}`
+  console.log(`获取的电影id是${id}`)
+  const url = `https://api.douban.com/v2/movie/${id}`
   const result = await rq(url)
-  return result
+
+  return JSON.parse(result)
 }
 
 ;(async () => {
-  const moives = [
-    { id: 30177763,
-      title: '同一堂课',
-      rate: '8.6',
-      pic: 'https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2517132506.jpg' },
-    { id: 30219672,
-      title: '放开我北鼻 第三季',
-      rate: '7.7',
-      pic: 'https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2522451880.jpg' },
-  ]
-
-  moives.map(async moive => {
-    const { id } = moive
-    let moiveData = await fetch(id) 
-
-    try {
-      moiveData = JSON.parse(moiveData)
-      console.log(`【${moiveData.title}】${moiveData.summary}`)
-    } catch(e) {
-      console.log(e)
-    }
+  const movies = await Movie.find({
+    $or: [
+      { summary: { $exists: false }},
+      { summary: null },
+      { title: '' },
+      { summary: '' },
+    ]
   })
+
+  for (let i = 0; i < movies.length; i++) {
+    let movie = movies[i]
+    let movieData = await fetch(movie.doubanId)
+
+    if (movieData) {
+      let tags = movieData.tags.map(tag => tag.name)
+      movie.tags = tags
+      movie.summary = movieData.summary
+      movie.rawTitle = movie.title
+
+      if (movieData.attrs) {
+        movie.movieTypes = movieData.attrs.movie_type || []
+        for (let j = 0; j < movie.movieTypes.length; j++) {
+          const types = movie.movieTypes[j] 
+          let cat = await Category.findOne({
+            name: types 
+          })
+
+          if (!cat) {
+            cat = new Category({
+              name: types,
+              movies: [movie._id]
+            })
+          } else {
+            if (!cat.movies.includes(movie._id)) {
+              cat.movies.push(movie._id)
+            }
+          }
+
+          await cat.save()
+
+          if (movie.category.length > 0) {
+            if (!movie.category.includes(cat._id)) {
+              movie.category.push(cat._id)
+            }
+          } else {
+            console.log('插入新的分类', cat._id)
+            movie.category.push(cat._id)
+          }
+        }
+
+        console.log(movie.category)
+        movie.publicDate = movieData.attrs.pubdate[0]
+        movie.years = movieData.attrs.year[0] || '未知'
+      }
+    }
+
+    await movie.save()
+  }
 })()

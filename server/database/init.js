@@ -44,4 +44,22 @@ const initSchemas = () => {
   glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(path => require(path))
 }
 
-module.exports = { connect, initSchemas }
+const initAdmin = async () => {
+  const User = mongoose.model('User')
+
+  let user = await User.findOne({
+    username: 'admin',
+  })
+
+  if (!user) {
+    user = new User({
+      username: 'admin',
+      password: '123456',
+      email: 'oddboy1990@gmail.com',
+    })
+
+    await user.save()
+  }
+}
+
+module.exports = { connect, initSchemas, initAdmin }

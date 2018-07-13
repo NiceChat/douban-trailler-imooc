@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const mongoose = require('mongoose')
 const { resolve } = require('path')
-const { connect, initSchemas } = require('./database/init')
+const { connect, initSchemas, initAdmin } = require('./database/init')
 
 // 等待数据库连接
 ;(async () => {
@@ -11,7 +11,12 @@ const { connect, initSchemas } = require('./database/init')
   // const Moive = mongoose.model('Moive')
   // const moives = await Moive.find({})  
   // console.log(moives)
-  require('./tasks/moive')
+
+  // require('./tasks/movie')
+  // require('./tasks/api')
+  // require('./tasks/trailer')
+  // require('./tasks/qiniu')
+  await initAdmin()
 })()
 
 const app = new Koa()

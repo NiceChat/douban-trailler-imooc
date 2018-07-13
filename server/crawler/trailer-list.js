@@ -16,6 +16,7 @@ const sleep = time => new Promise(reslove => {
 
   await page.waitForSelector('.more')
 
+  // 爬去页面数量测试数据我们就爬一页就好了
   // for(let i = 0; i <= 1; i++) {
   //   await sleep(1000)
   //   await page.click('.more')
