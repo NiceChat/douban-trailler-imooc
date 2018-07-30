@@ -28,10 +28,6 @@ const app = new Koa()
 // const pug = require('pug')
 const views = require('koa-views')
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods())
-  
 app.use(views(resolve(__dirname, './views'), { 
     extension: 'pug' 
   }))
