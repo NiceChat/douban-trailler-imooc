@@ -2,8 +2,9 @@ const Router = require('koa-router')
 const symbolPrefix = Symbol('prefix')
 const glob = require('glob')
 const routerMap = new Map()
-const _ = require('ladash')
-export const isArray = c => (_.isArray(c) : c : [c])
+const _ = require('lodash')
+const { resolve } = require('path')
+export const toArray = c => (_.isArray(c) ? c : [c])
 
 export class Route {
   constructor (app, apiPath) {
@@ -18,17 +19,17 @@ export class Route {
     
     for (let [conf, controller] of routerMap) {
       // todo 不太理解为什么可能是数组
-      const controllers = isArray(controller)
-      const prefixPath = conf.target[symbolPrefix]      
+      // console.log("查看:" + controller)
+      const controllers = toArray(controller)
+      let prefixPath = conf.target[symbolPrefix]      
 
       if (prefixPath) prefixPath = normalizePath(prefixPath)
       const routerPath = prefixPath + conf.path
-      // todo 真心不太懂为什么这里第二额参数是平铺下controllers
       this.router[conf.method](routerPath, ...controllers)
     }
 
     this.app.use(this.router.routes())
-    this.use(this.router.allowedMethods())
+    this.app.use(this.router.allowedMethods())
   }
 }
 
@@ -40,30 +41,31 @@ export const controller = path => target => {
 
 export const router = conf => (target, key, descriptor) => {
   conf.path = normalizePath(conf.path)
+  console.log("key:" + key)
 
   routerMap.set({
     target,
-    ...conf
+    ...conf,
   }, target[key])
 }
 
 export const get = path => router({
-  mothod: 'get',
+  method: 'get',
   path: path,
 })
 
 export const post = path => router({
-  mothod: 'post',
+  method: 'post',
   path: path,
 })
 
 export const put = path => router({
-  mothod: 'put',
+  method: 'put',
   path: path,
 })
 
 export const del = path => router({
-  mothod: 'del',
+  method: 'del',
   path: path,
 })
 

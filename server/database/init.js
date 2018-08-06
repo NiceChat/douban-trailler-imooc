@@ -11,7 +11,7 @@ const connect = () => {
       mongoose.set('debug', true)
     }
 
-    mongoose.connect(db)
+    mongoose.connect(db, { useNewUrlParser: true })
 
     mongoose.connection.on('error', () => {
       if (maxConnectTimes < 5) {

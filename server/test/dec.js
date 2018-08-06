@@ -1,21 +1,20 @@
-const symbolPrefix = Symbol()
-const speak = lang => target => { target.lang = lang }
+// const symbolPrefix = Symbol()
+// const speak = lang => target => { target.lang = lang }
 
 class Boy {
   @speak('中文')
   run () {
-    console.log('I can run and I speak ' + this.lang)
+    console.log('I can run.')
   }
 }
 
-// function speak(lang) {
-//   return function (target, key, descriptor) {
-//     target.lang = lang
-//     console.log(lang)
-//     return descriptor
-//   }
-// }
-
+function speak(lang) {
+  return function (target, key, descriptor) {
+    console.log(target)
+    console.log(key)
+    console.log(descriptor)
+  }
+}
 const nicechat = new Boy()
 
 nicechat.run()

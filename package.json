@@ -5,8 +5,9 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node start.js",
-    "build": "parcel build parcel/index.html --no-cache -d parcel/dist --public-url /dist/"
+    "start": "rm -rf /dist && rm -rf .cache && NODE_ENV=development nodemon ./start.js",
+    "start2": "babel-node start2.js",
+    "build": "rm -rf /dist && parcel build src/index.html --no-cache -d dist --public-url /"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
@@ -33,19 +35,31 @@
     "nodemon": "^1.17.5"
   },
   "dependencies": {
+    "antd": "^3.8.0",
+    "autoprefixer": "^9.0.2",
     "bcrypt": "^2.0.1",
     "ejs": "^2.6.1",
     "glob": "^7.1.2",
     "koa": "^2.5.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
+    "koa-view": "^2.1.1",
     "koa-views": "^6.1.4",
     "ladash": "^1.2.0",
+    "lodash": "^4.17.10",
     "mongoose": "^5.2.1",
     "nanoid": "^1.0.4",
+    "node-sass": "^4.9.2",
+    "parcel": "^1.9.7",
+    "parcel-bundler": "^1.9.7",
+    "postcss-modules": "^1.3.2",
+    "postcss-preset-env": "^5.3.0",
     "pug": "^2.0.3",
     "puppeteer": "^1.5.0",
     "qiniu": "^7.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
   }

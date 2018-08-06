@@ -1,7 +1,7 @@
-const { Route } = require('../lib/decorators')
+const { Route } = require('../lib/decorator')
 const { resolve } = require('path')
 
-export const router = app => {
+export const router = async app => {
   const apiPath = resolve(__dirname, '../routes')
   const router = new Route(app, apiPath)
 

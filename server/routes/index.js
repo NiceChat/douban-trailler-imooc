@@ -1,24 +1,39 @@
-import mongoose from 'mongoose'
-import { get, post, controller } from '../lib/decorator'
+import { 
+  get,
+  post,
+  controller
+} from '../lib/decorator'
+
+import {
+  getAllMoives,
+  getMovieDetail,
+  getRelativeMovies,
+} from '../service/movies'
 
 @controller('/api/v0/movies')
 export class movieController {
   @get('/')
   async getMovies(ctx, next) {
-    const Movie = mongoose.model('Movie')
-    const movies = await Movie.find({}).sort({
-      'meta.createTime': -1
-    })
+    const type = ctx.query.type
+    const year = ctx.query.year 
 
+    const movies = await getAllMoives(type, year)
     ctx.body =  movies
   }
 
   @get('/:id')
   async getMovieDetail(ctx, next) {
-    const Movie = mongoose.model('Movie')
     const id = ctx.params.id
-    const movies = await Movie.findOne({doubanId: id})
+    const movie = await getMovieDetail(id) 
+    const relativeMovies = await getRelativeMovies(movie)
 
-    ctx.body = movies
+    ctx.body = {
+      data: {
+        movie,
+        relativeMovies,
+      },
+      
+      success: true
+    }
   }
 }

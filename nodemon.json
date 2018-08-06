@@ -1,0 +1,14 @@
+{
+  "verbose": true,
+  "restartable": "rs",
+  "ignore": [
+    "node_modules/**/node_modules",
+    ".git"
+  ],
+  "watch": [
+    "server/",
+    "src/views"
+  ],
+  "ext": "js json",
+  "delay": "2500"
+}
