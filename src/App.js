@@ -7,14 +7,14 @@ import './assets/common.scss'
 export default () => (
   <Switch>
     {
-      routes.map(route => {
+      routes.map(({ name, path, exact = true, component }) => {
         return (
           <Route 
-            path={route.path} 
-            key={route.name}
-            exact= {true}
-            component={route.component}>
-          </Route>
+            path={path}
+            key={name}
+            exact={exact}
+            component={component}
+          />
         )
       })
     } 
