@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import routes from './routes'
 import 'antd/dist/antd.css'
+import './assets/common.sass'
 import './assets/common.scss'
 
 export default () => (
@@ -9,7 +10,7 @@ export default () => (
     {
       routes.map(({ name, path, exact = true, component }) => {
         return (
-          <Route 
+          <Route
             path={path}
             key={name}
             exact={exact}
@@ -17,6 +18,6 @@ export default () => (
           />
         )
       })
-    } 
+    }
   </Switch>
 )
