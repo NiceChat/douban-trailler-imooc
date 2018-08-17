@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Spin, Menu } from "antd"
-import navRoutes from './nav'
+import navRoutes from '../nav'
 
 const getMenuContent = ({ path, name }) => {
   return (
@@ -13,7 +13,7 @@ const getMenuContent = ({ path, name }) => {
 }
 
 export default class LayoutDefault extends Component {
-  constructor () {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -36,14 +36,17 @@ export default class LayoutDefault extends Component {
       : '全部'
     : navRoutes[0].name
 
-  toggleLoading({ loadig = false, tip = 'waiting a moment'}) {
+  toggleLoading = ({ loadig = false, tip = 'waiting a moment'}) => {
     this.setState({
-      laoding,
+      loadig,
       tip
     })
   }
 
   render() {
+    const { children } = this.props
+    const { tip, loading } = this.state
+
     return (
       <div
         style={{ width: '100%', height: '100%' }}
@@ -83,7 +86,7 @@ export default class LayoutDefault extends Component {
         <Spin
           tip={tip}
           wrapperClassName='content-spin full'
-          spinning={laoding}>
+          spinning={loading}>
           { children }
         </Spin>
       </div>

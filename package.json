@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rm -rf /dist && rm -rf .cache && NODE_ENV=development nodemon ./start.js",
+    "start": "rm -rf /dist && NODE_ENV=development nodemon ./start.js",
     "start2": "babel-node start2.js",
     "build": "rm -rf /dist && parcel build src/index.html --no-cache -d dist --public-url /"
   },
@@ -37,6 +37,7 @@
   "dependencies": {
     "antd": "^3.8.0",
     "autoprefixer": "^9.0.2",
+    "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "ejs": "^2.6.1",
     "glob": "^7.1.2",
@@ -47,6 +48,7 @@
     "koa-views": "^6.1.4",
     "ladash": "^1.2.0",
     "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "mongoose": "^5.2.1",
     "nanoid": "^1.0.4",
     "node-sass": "^4.9.2",

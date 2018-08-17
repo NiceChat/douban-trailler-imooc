@@ -1,4 +1,4 @@
-import { 
+import {
   get,
   post,
   controller
@@ -15,16 +15,19 @@ export class movieController {
   @get('/')
   async getMovies(ctx, next) {
     const type = ctx.query.type
-    const year = ctx.query.year 
+    const year = ctx.query.year
 
     const movies = await getAllMoives(type, year)
-    ctx.body =  movies
+    ctx.body = {
+      data: movies,
+      success: true
+    }
   }
 
   @get('/:id')
   async getMovieDetail(ctx, next) {
     const id = ctx.params.id
-    const movie = await getMovieDetail(id) 
+    const movie = await getMovieDetail(id)
     const relativeMovies = await getRelativeMovies(movie)
 
     ctx.body = {
@@ -32,7 +35,7 @@ export class movieController {
         movie,
         relativeMovies,
       },
-      
+
       success: true
     }
   }

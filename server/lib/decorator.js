@@ -16,12 +16,12 @@ export class Route {
   // 加载每一个路由文件 初始化每一个路由控制器
   init() {
     glob.sync(resolve(this.apiPath, './**/*.js')).forEach(path => require(path))
-    
+
     for (let [conf, controller] of routerMap) {
       // todo 不太理解为什么可能是数组
       // console.log("查看:" + controller)
       const controllers = toArray(controller)
-      let prefixPath = conf.target[symbolPrefix]      
+      let prefixPath = conf.target[symbolPrefix]
 
       if (prefixPath) prefixPath = normalizePath(prefixPath)
       const routerPath = prefixPath + conf.path
@@ -41,7 +41,6 @@ export const controller = path => target => {
 
 export const router = conf => (target, key, descriptor) => {
   conf.path = normalizePath(conf.path)
-  console.log("key:" + key)
 
   routerMap.set({
     target,
