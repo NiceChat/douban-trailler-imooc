@@ -14,6 +14,7 @@ export default class Home extends Component {
       type: this.props.match.params.type,
       year: this.props.match.params.year,
       movies: [],
+      loading: true,
     }
   }
 
@@ -27,27 +28,30 @@ export default class Home extends Component {
       url: `/api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`,
     })
     .then(res => {
-      console.log(res)
       this.setState({
-        movies: res
+        movies: res,
+        loading: false,
       })
     })
     .catch(() => {
       this.setState({
-        movies: []
+        movies: [],
+        loading: false,
       })
     })
   }
 
   _renderContent = () => {
-    const { movies } = this.state
+    const { movies, loading } = this.state
 
     if (!movies || !movies.length) {
       return null
     }
 
     return (
-      <Content movies={movies}>
+      <Content
+        loading={loading}
+        movies={movies}>
       </Content>
     )
   }

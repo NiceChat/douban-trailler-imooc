@@ -5,7 +5,7 @@ import navRoutes from '../nav'
 const getMenuContent = ({ path, name }) => {
   return (
     <a
-      style={{ color: '#fff218' }}
+      style={{ color: '#fff' }}
       href={ path ? path : '/' }>
       { name }
     </a>
@@ -52,7 +52,7 @@ export default class LayoutDefault extends Component {
         style={{ width: '100%', height: '100%' }}
         className='flex-column'>
         <Menu
-          style={{ fontSize: 13.5, backgroundColor: '#fff2e8' }}
+          style={{ fontSize: 13.5, backgroundColor: 'rgb(25, 25, 19)' }}
           defaultSelectedKeys={[ this.matchRouteName ]}
           mode='horizontal'>
 
@@ -62,18 +62,25 @@ export default class LayoutDefault extends Component {
               marginRirght: 30,
               fontSize: 18,
               textAlign: 'center',
-              color: '#fff !important',
               float: 'left',
             }}>
             <a
-              style={{ color: '#fff2e8' }}
+              style={{ color: '#fff' }}
               href={'/'}
-              className='hover-scale'>预告片网站</a>
+              className='hover-scale'>豆瓣电影预告片</a>
           </Menu.Item>
 
           {
             navRoutes.map((e, i) => (
               <Menu.Item
+                style={{
+                  marginLeft: 10,
+                  marginRirght: 10,
+                  fontSize: 14,
+                  color: '#fff',
+                  textAlign: 'center',
+                  float: 'left',
+                }}
                 key={e.name}>
                 {
                   getMenuContent({...e})

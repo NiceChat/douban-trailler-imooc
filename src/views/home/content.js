@@ -14,10 +14,10 @@ export default class Home extends Component {
   }
 
   _renderContent = () => {
-    const { movies } = this.props
+    const { movies, loading } = this.props
 
     return (
-      <div style={{ padding: '30px'}}>
+      <div style={{ padding: '10px'}}>
         <Row>
           {
             movies.map((it, i) => (
@@ -26,23 +26,24 @@ export default class Home extends Component {
                 lg={{span: 8}}
                 md={{span: 12}}
                 sm={{span: 24}}
-                style={{marginBottom: '8px'}}
+                style={{ padding: '8px'}}
                 key={i}>
                 <Card
+                  loading={loading}
                   bordered={false}
-                  hoverable
-                  style={{ width: '100%'}}
+                  hoverable={false}
+                  style={{ width: '100%' }}
                   actions={[
                     <Badge>
                       <Icon
                         style={{marginRight: '2px'}}
-                        type='clocl-circle'>
+                        type='clock-circle-o'>
                       </Icon>
-                      {moment(it.meta.createAt).fromNow(true)}前更新
+                      {moment(it.meta.createTime).fromNow(true)}前更新
                     </Badge>,
                     <Badge>
                       <Icon style={{marginRight: '2px'}}
-                        type='clocl-circle'>
+                        type='heart-o'>
                       </Icon>
                       {it.rate}分
                     </Badge>
