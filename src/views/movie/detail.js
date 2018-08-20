@@ -22,9 +22,12 @@ export default class Detail extends Component {
     this._getMovieDetail()
   }
 
-  // componentDidUpdate() {
-  //   this._getMovieDetail()
-  // }
+  componentDidUpdate (prevProps) {
+    const  oldId = prevProps.match.params.id
+    const newId = this.props.match.params.id
+    if (newId !== oldId)
+    this._getMovieDetail()
+  }
 
   _getMovieDetail = () => {
     request({
@@ -52,6 +55,12 @@ export default class Detail extends Component {
               },
             })
           }, 500)
+        } else {
+          this.player.switchVideo({
+            url: video,
+            pic: thumb,
+            type: 'auto',
+          })
         }
       })
     })

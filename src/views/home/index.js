@@ -75,9 +75,9 @@ export default class Home extends Component {
             className='align-self-start'
             defaultSelectedKeys={[selectedKey]}>
             {
-              years.map((e, i) => (
+              years.reverse().map((e, i) => (
                 <MenuItem key={i}>
-                  <a href={`year/${e}`}>{ e }年上映</a>
+                  <span>{ e }年上映</span>
                 </MenuItem>
               ))
             }
