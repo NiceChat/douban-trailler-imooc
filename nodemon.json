@@ -3,7 +3,9 @@
   "restartable": "rs",
   "ignore": [
     "node_modules/**/node_modules",
-    ".git"
+    ".git",
+    "server/crawler",
+    "server/tasks"
   ],
   "watch": [
     "server/",

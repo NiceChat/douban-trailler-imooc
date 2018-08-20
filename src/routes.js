@@ -4,11 +4,11 @@ export default [
   {
     name: '首页',
     path: '/',
-    component: AC(() => import('./views/home')), 
+    component: AC(() => require('./views/home')),
   },
   {
     name: '详情',
     path: '/detail/:id',
-    component: AC(() => import('./views/movie/detail')) 
+    component: AC(() => require('./views/movie/detail'))
   },
 ]

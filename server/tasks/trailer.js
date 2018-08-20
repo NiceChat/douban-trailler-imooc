@@ -6,12 +6,15 @@ const Category = mongoose.model('Category')
 
 ;(async () => {
   const script = resolve(__dirname, '../crawler/video')
-  const child = cp.fork(script, []) 
+  const child = cp.fork(script, [])
   const movies = await Movie.find({
     $or: [
       { video: { $exists: false } },
       { video: null },
       { video: '' },
+      { cover: { $exists: false} },
+      { cover: ''},
+      { cover: null },
     ]
   })
   let invoked = false
@@ -26,7 +29,7 @@ const Category = mongoose.model('Category')
 
   child.on('exit', code => {
     if (invoked) return
-    invoked = true 
+    invoked = true
     let error = code === 0 ? null : new Error('exit code:' + code)
     console.log('退出')
     console.log(error)
@@ -35,7 +38,7 @@ const Category = mongoose.model('Category')
   child.on('message', async data => {
     const movie = await Movie.findOne({
       doubanId: data.id
-    }) 
+    })
 
     if (data.video) {
       movie.cover = data.cover
@@ -52,11 +55,11 @@ const Category = mongoose.model('Category')
         })
 
         if (cat) {
-          const index = cat.movies.indexOf(movie._id)  
+          const index = cat.movies.indexOf(movie._id)
 
           if (index !== -1) {
             cat.movies.splice(index, 1)
-            await cat.save()   
+            await cat.save()
           }
         }
       })

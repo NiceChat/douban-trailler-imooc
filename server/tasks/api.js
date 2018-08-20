@@ -34,9 +34,9 @@ const fetch = async (id) => {
       if (movieData.attrs) {
         movie.movieTypes = movieData.attrs.movie_type || []
         for (let j = 0; j < movie.movieTypes.length; j++) {
-          const types = movie.movieTypes[j] 
+          const types = movie.movieTypes[j]
           let cat = await Category.findOne({
-            name: types 
+            name: types
           })
 
           if (!cat) {
@@ -57,12 +57,10 @@ const fetch = async (id) => {
               movie.category.push(cat._id)
             }
           } else {
-            console.log('插入新的分类', cat._id)
             movie.category.push(cat._id)
           }
         }
 
-        console.log(movie.category)
         movie.publicDate = movieData.attrs.pubdate[0]
         movie.years = movieData.attrs.year[0] || '未知'
       }

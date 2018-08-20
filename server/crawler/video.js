@@ -31,10 +31,11 @@ process.on('message', async movies => {
           cover = ''
         }
 
+        console.log('封面图:' + cover)
         return {
           link,
-          cover: cover,
-        } 
+          cover,
+        }
       }
 
       return {}
@@ -59,7 +60,7 @@ process.on('message', async movies => {
     const data = {
       id: id,
       cover: cover.cover,
-      video: video 
+      video: video
     }
 
     process.send(data)
