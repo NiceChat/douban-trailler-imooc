@@ -1,7 +1,7 @@
 export default [
   {
-    name: '',
-    path: '/'
+    name: '全部',
+    path: `/list/${encodeURIComponent('全部')}`
   },
   {
     name: '剧情',

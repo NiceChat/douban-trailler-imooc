@@ -10,7 +10,7 @@ export default class Home extends Component {
     super(props)
 
     this.state = {
-      years: ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018'],
+      years: ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018'].reverse(),
       type: this.props.match.params.type,
       year: this.props.match.params.year,
       movies: [],
@@ -19,7 +19,12 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.location)
     this._getAllMovies()
+  }
+
+  componentWillReceiveProps(prevProps) {
+    console.log(prevProps)
   }
 
   _getAllMovies = () => {
@@ -57,6 +62,7 @@ export default class Home extends Component {
   }
 
   _selectItem = ({ key }) => {
+    console.log(key)
     this.setState({
       selectedKey: key
     })
@@ -75,7 +81,7 @@ export default class Home extends Component {
             className='align-self-start'
             defaultSelectedKeys={[selectedKey]}>
             {
-              years.reverse().map((e, i) => (
+              years.map((e, i) => (
                 <MenuItem key={i}>
                   <span>{ e }年上映</span>
                 </MenuItem>

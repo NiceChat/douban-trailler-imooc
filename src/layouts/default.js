@@ -6,7 +6,7 @@ const getMenuContent = ({ path, name }) => {
   return (
     <a
       style={{ color: '#fff' }}
-      href={ path ? path : '/' }>
+      src={ path ? path : '/' }>
       { name }
     </a>
   )
@@ -67,7 +67,7 @@ export default class LayoutDefault extends Component {
             <a
               style={{ color: '#fff' }}
               href={'/'}
-              className='hover-scale'>豆瓣电影预告片</a>
+              className='hover-scale'>Moives</a>
           </Menu.Item>
 
           {
