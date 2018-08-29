@@ -3,7 +3,7 @@ import AC from './components/async_load'
 export default [
   {
     name: '首页',
-    path: '/',
+    path: '/:type?',
     component: AC(() => require('./views/home')),
   },
   {

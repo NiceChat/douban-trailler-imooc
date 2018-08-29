@@ -2,35 +2,38 @@ import React, { Component } from 'react'
 import Layout from '../../layouts/default'
 import { Menu } from 'antd'
 import MenuItem from 'antd/lib/menu/MenuItem'
-import { request } from '../../lib'
+import { request, query } from '../../lib'
 import Content from './content'
 
 export default class Home extends Component {
   constructor(props) {
     super(props)
+    const { getQuery } = query
 
     this.state = {
       years: ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018'].reverse(),
       type: this.props.match.params.type,
-      year: this.props.match.params.year,
+      year: getQuery('year') ,
       movies: [],
       loading: true,
     }
   }
 
   componentDidMount() {
-    console.log(this.props.location)
     this._getAllMovies()
   }
 
   componentWillReceiveProps(prevProps) {
-    console.log(prevProps)
+    if (this.props !== prevProps) {
+      console.log('diffcult')
+    }
   }
 
   _getAllMovies = () => {
+    const { getQuery } = query
     request(window.__LOADING__)({
       method: 'get',
-      url: `/api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`,
+      url: `/api/v0/movies?type=${this.state.type || ''}&year=${getQuery('year')}`,
     })
     .then(res => {
       this.setState({
@@ -62,10 +65,13 @@ export default class Home extends Component {
   }
 
   _selectItem = ({ key }) => {
-    console.log(key)
+    const { setQuery } = query
     this.setState({
       selectedKey: key
     })
+
+    const { years } = this.state
+    setQuery('year', years[key])
   }
 
   render() {

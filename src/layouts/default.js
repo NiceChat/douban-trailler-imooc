@@ -6,7 +6,7 @@ const getMenuContent = ({ path, name }) => {
   return (
     <a
       style={{ color: '#fff' }}
-      src={ path ? path : '/' }>
+      href={ path ? path : '/' }>
       { name }
     </a>
   )
