@@ -50,7 +50,7 @@ export default class Home extends Component {
     const { movies, loading } = this.state
 
     if (!movies || !movies.length) {
-      return "未能找到对应电影"
+      return <div style={{ textAlign: 'center', marginTop: '200px'}}>未能找到对应电影</div>
     }
 
     return (
