@@ -11,7 +11,7 @@ const defaultAxiosConf = {
 const _request = (params = {}, fn = () => {}) => {
   return axios({...defaultAxiosConf, ...params})
     .then(res => {
-      const { success, data, err, code } = res.data
+      const { success, data, error, code } = res.data
 
       if (code === 401) {
         window.location.href = '/'
@@ -24,12 +24,11 @@ const _request = (params = {}, fn = () => {}) => {
         return data
       }
 
-      throw err
+      throw error
     })
-    .catch(err => {
+    .catch(error => {
       fn(false)
-
-      message.err(String(err || '网络错误'))
+      message.error(String(error || '网络错误'))
     })
 }
 

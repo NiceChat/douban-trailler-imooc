@@ -29,7 +29,7 @@ const userSchema = new Schema({
   },
   lockUntil: {
     type: Number,
-    default: 1, 
+    default: 1,
   },
   meta: {
     createTime: {
@@ -41,7 +41,7 @@ const userSchema = new Schema({
       default: Date.now()
     }
   }
-})  
+})
 
 // 设置虚拟字段
 userSchema.virtual('isLocked').get(function() {
@@ -54,7 +54,7 @@ userSchema.pre('save', function(next) {
     this.createTime = this.updateTime = Date.now()
   } else {
     this.updateTime = Date.now()
-  } 
+  }
 
   next()
 })
@@ -78,7 +78,7 @@ userSchema.methods = {
   comparePassword: function(_password, password) {
     return new Promise( (resolve, reject) => {
       bcrypt.compare(_password, password, (err, isMatch) => {
-        if (!error) resolve(isMatch)
+        if (!err) resolve(isMatch)
         else reject(err)
       })
     })
@@ -104,7 +104,7 @@ userSchema.methods = {
           $inc: {
             loginTimes: 1,
           }
-        } 
+        }
 
         if (this.loginTimes + 1 >= MAX_TRY_TIMES && !this.isLocked) {
           updates.$set = {
@@ -122,5 +122,3 @@ userSchema.methods = {
 }
 
 mongoose.model('User', userSchema)
-
-

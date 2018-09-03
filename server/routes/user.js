@@ -1,8 +1,6 @@
-import { 
-  get,
+import {
   post,
   controller,
-  use,
 } from '../lib/decorator'
 
 import {
@@ -12,14 +10,14 @@ import {
 @controller('/api/v0/user')
 export class userController {
   @post('/')
-  async check(ctx, next) {
+  async check(ctx) {
     const { email, password } = ctx.request.body
-    const matchData = await checkPassword(email, password) 
+    const matchData = await checkPassword(email, password)
 
     if (!matchData.user) {
       return (ctx.body = {
         success: false,
-        msg: '用户不存在'
+        error: '用户不存在'
       })
     }
 
@@ -27,13 +25,13 @@ export class userController {
       return (ctx.body = {
         success: true,
         msg: ''
-      }) 
+      })
     }
 
     if (!matchData.match) {
-      return (cyx.body = {
+      return (ctx.body = {
         success: false,
-        msg: '密码不存在'
+        error: '密码错误'
       })
     }
   }
