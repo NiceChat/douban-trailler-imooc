@@ -9,11 +9,12 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     const { getQuery } = query
+    const year = getQuery('year')
 
     this.state = {
       years: ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018'].reverse(),
       type: this.props.match.params.type,
-      year: getQuery('year') ,
+      year,
       movies: [],
       loading: true,
     }
@@ -23,17 +24,13 @@ export default class Home extends Component {
     this._getAllMovies()
   }
 
-  componentWillReceiveProps(prevProps) {
-    if (this.props !== prevProps) {
-      console.log('diffcult')
-    }
-  }
 
   _getAllMovies = () => {
-    const { getQuery } = query
+    const { year } = this.state
+
     request(window.__LOADING__)({
       method: 'get',
-      url: `/api/v0/movies?type=${this.state.type || ''}&year=${getQuery('year')}`,
+      url: `/api/v0/movies?type=${this.state.type || ''}&year=${year}`,
     })
     .then(res => {
       this.setState({
@@ -53,7 +50,7 @@ export default class Home extends Component {
     const { movies, loading } = this.state
 
     if (!movies || !movies.length) {
-      return null
+      return "未能找到对应电影"
     }
 
     return (
@@ -66,16 +63,11 @@ export default class Home extends Component {
 
   _selectItem = ({ key }) => {
     const { setQuery } = query
-    this.setState({
-      selectedKey: key
-    })
-
-    const { years } = this.state
-    setQuery('year', years[key])
+    setQuery('year', key)
   }
 
   render() {
-    const { years, selectedKey } = this.state
+    const { years, year } = this.state
 
     return (
       <Layout {...this.props}>
@@ -85,10 +77,10 @@ export default class Home extends Component {
             style={{height: '100%', overflowY: 'scroll', maxWidth: '300px'}}
             onSelect={this._selectItem}
             className='align-self-start'
-            defaultSelectedKeys={[selectedKey]}>
+            defaultSelectedKeys={[year]}>
             {
-              years.map((e, i) => (
-                <MenuItem key={i}>
+              years.map((e) => (
+                <MenuItem key={e}>
                   <span>{ e }年上映</span>
                 </MenuItem>
               ))

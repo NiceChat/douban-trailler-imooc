@@ -6,7 +6,7 @@ const searchObj = () => {
     const arr = search.substring(1).split('&')
     arr.forEach(item => {
       const temp = item.split('=')
-      obj[temp[0]] = obj[temp[1]]
+      obj[temp[0]] = temp[1]
     })
   }
 
@@ -26,7 +26,7 @@ const getQuery = (key) => {
   const query = searchObj()
 
   if (!isEmptyObject(query)) {
-    return query[key]
+    return decodeURIComponent(query[key])
   }
 
   return ''
