@@ -3,10 +3,12 @@ import { Spin, Menu } from "antd"
 import navRoutes from '../nav'
 
 const getMenuContent = ({ path, name }) => {
+  const search = window.location.search
+
   return (
     <a
       style={{ color: '#fff' }}
-      href={ path ? path : '/' }>
+      href={ path ? `${path}${search}` : `/${search}` }>
       { name }
     </a>
   )
