@@ -11,7 +11,6 @@ export default class Login extends Component {
   }
 
   handleSubmit = (e) => {
-    console.log('提交')
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -22,8 +21,8 @@ export default class Login extends Component {
             ...values
           }
         })
-        .then(() => {
-          console.log('test')
+        .then((res) => {
+          this.props.history.push('/admin')
         })
       }
     })
@@ -35,6 +34,7 @@ export default class Login extends Component {
     return (
       <Card
         title="欢迎登录管理后台"
+        hoverable={false}
         style={{ width: 450, margin: '120px auto 0 auto' }}
       >
         <Form onSubmit={this.handleSubmit} className="login-form">
@@ -55,13 +55,6 @@ export default class Login extends Component {
           </FormItem>
 
           <FormItem>
-            {getFieldDecorator('remember', {
-              valuePropName: 'checked',
-              initialValue: true,
-            })(
-              <Checkbox>Remember me</Checkbox>
-            )}
-            <br />
             <Button
               style={{width: '100%'}}
               type="primary" htmlType="submit" className="login-form-button">
