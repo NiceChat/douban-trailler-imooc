@@ -8,8 +8,7 @@
     "server/tasks"
   ],
   "watch": [
-    "server/",
-    "src/views"
+    "server/"
   ],
   "ext": "js json",
   "delay": "2500"

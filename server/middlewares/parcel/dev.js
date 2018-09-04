@@ -3,7 +3,7 @@ import views from 'koa-view'
 import serve from 'koa-static'
 import { resolve } from 'path'
 
-const r = path => resolve(__dirname, path) 
+const r = path => resolve(__dirname, path)
 const bundler = new Bundler(r('../../../src/index.html'), {
   publicUrl: '/',
   watch: true,

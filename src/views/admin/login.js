@@ -22,7 +22,7 @@ export default class Login extends Component {
           }
         })
         .then((res) => {
-          this.props.history.push('/admin')
+          this.props.history.push('/list')
         })
       }
     })

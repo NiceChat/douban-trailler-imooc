@@ -21,4 +21,9 @@ export default [
     path: '/login',
     component: AC(() => require('./views/admin/login'))
   },
+  {
+    name: '电影管理',
+    path: '/admin/list',
+    component: AC(() => require('./views/admin/list'))
+  },
 ]

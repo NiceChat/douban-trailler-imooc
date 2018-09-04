@@ -22,9 +22,12 @@ export class userController {
     }
 
     if (matchData.match) {
+      const user = matchData.user
+
       return (ctx.body = {
         success: true,
-        msg: ''
+        msg: '登录成功！',
+        user,
       })
     }
 
