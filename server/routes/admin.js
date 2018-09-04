@@ -5,11 +5,15 @@ import {
 
 import {
   checkPassword
-} from '../service/user'
+} from '../service/admin'
 
-@controller('/api/v0/user')
+import {
+  getAllMoives,
+} from '../service/movies'
+
+@controller('/api/v0/admin')
 export class userController {
-  @post('/')
+  @post('/login')
   async check(ctx) {
     const { email, password } = ctx.request.body
     const matchData = await checkPassword(email, password)
@@ -36,6 +40,15 @@ export class userController {
         success: false,
         error: '密码错误'
       })
+    }
+  }
+
+  @get('/movies')
+  async getMovies(ctx, next) {
+    const movies = await getAllMoives()
+    ctx.body = {
+      data: movies,
+      success: true
     }
   }
 }

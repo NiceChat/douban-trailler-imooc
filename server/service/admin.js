@@ -6,7 +6,7 @@ export const checkPassword = async (email, password) => {
   const user = await User.findOne({ email })
 
   if (user) {
-    match = await user.comparePassword(password, user.password) 
+    match = await user.comparePassword(password, user.password)
   }
 
   return {
