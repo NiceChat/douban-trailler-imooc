@@ -4,7 +4,8 @@ const glob = require('glob')
 const routerMap = new Map()
 const _ = require('lodash')
 const { resolve } = require('path')
-export const toArray = c => (_.isArray(c) ? c : [c])
+
+export const isArray = c => (_.isArray(c) ? c : [c])
 
 export class Route {
   constructor (app, apiPath) {
@@ -18,13 +19,13 @@ export class Route {
     glob.sync(resolve(this.apiPath, './**/*.js')).forEach(path => require(path))
 
     for (let [conf, controller] of routerMap) {
-      // todo 不太理解为什么可能是数组
-      // console.log("查看:" + controller)
-      const controllers = toArray(controller)
+      const controllers = isArray(controller)
       let prefixPath = conf.target[symbolPrefix]
 
       if (prefixPath) prefixPath = normalizePath(prefixPath)
       const routerPath = prefixPath + conf.path
+      // this.router.post('/api/v0/movies', funcA, funcB)
+      // Multiple middleware 这里的多个路由困扰了我好久
       this.router[conf.method](routerPath, ...controllers)
     }
 
@@ -78,4 +79,33 @@ export const all = path => router({
   path: path,
 })
 
+const decorate = (args, middleware) => {
+  let [ target, key, descriptor ] = args
 
+  target[key] = isArray(target[key])
+  target[key].unshift(middleware)
+
+  return descriptor
+}
+
+const convert = (middleware) => {
+  return (...args) => {
+    return decorate(args, middleware)
+  }
+}
+
+export const auth = convert(async (ctx, next) => {
+  const user = ctx.session.user
+
+  if (!user) {
+    return (
+      ctx.body = {
+        success: false,
+        code: 401,
+        error:'登录信息失效，请重新登录!'
+      }
+    )
+  }
+
+  await next()
+})

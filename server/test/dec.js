@@ -1,6 +1,7 @@
 // const symbolPrefix = Symbol()
 // const speak = lang => target => { target.lang = lang }
 
+@humman()
 class Boy {
   @speak('中文')
   run () {
@@ -10,6 +11,16 @@ class Boy {
 
 function speak(lang) {
   return function (target, key, descriptor) {
+    console.log('speak')
+    console.log(target)
+    console.log(key)
+    console.log(descriptor)
+  }
+}
+
+function humman() {
+  return function(target, key, descriptor) {
+    console.log('humman')
     console.log(target)
     console.log(key)
     console.log(descriptor)

@@ -3,6 +3,8 @@ import {
   controller,
   del,
   get,
+  auth,
+  role
 } from '../lib/decorator'
 
 import {
@@ -14,7 +16,7 @@ import {
 } from '../service/movies'
 
 @controller('/api/v0/admin')
-export class userController {
+export class adminController {
   @post('/login')
   async check(ctx) {
     const { email, password } = ctx.request.body
@@ -46,8 +48,10 @@ export class userController {
   }
 
   @get('/movies')
-  async getMovies(ctx, next) {
+  @auth
+  async getMoviesList(ctx, next) {
     const movies = await getAllMoives()
+
     ctx.body = {
       data: movies,
       success: true
