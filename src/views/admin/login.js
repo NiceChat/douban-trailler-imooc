@@ -16,13 +16,13 @@ export default class Login extends Component {
       if (!err) {
         request({
           method: 'POST',
-          url: '/api/v0/user',
+          url: '/api/v0/admin/login',
           data: {
             ...values
           }
         })
         .then((res) => {
-          this.props.history.push('/list')
+          this.props.history.push('/admin/list')
         })
       }
     })

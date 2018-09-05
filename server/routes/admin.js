@@ -1,6 +1,8 @@
 import {
   post,
   controller,
+  del,
+  get,
 } from '../lib/decorator'
 
 import {
@@ -51,4 +53,5 @@ export class userController {
       success: true
     }
   }
+
 }

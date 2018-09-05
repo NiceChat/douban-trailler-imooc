@@ -5,7 +5,8 @@
     "node_modules/**/node_modules",
     ".git",
     "server/crawler",
-    "server/tasks"
+    "server/tasks",
+    "server/test"
   ],
   "watch": [
     "server/"

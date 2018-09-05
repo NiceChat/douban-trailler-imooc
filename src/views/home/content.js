@@ -35,6 +35,7 @@ export default class Home extends Component {
                 key={i}>
                 <Card
                   loading={loading}
+                  className='ant-card__home'
                   bordered={false}
                   hoverable={false}
                   style={{ width: '100%' }}
