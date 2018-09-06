@@ -4,7 +4,7 @@ const { resolve } = require('path')
 const { connect, initSchemas, initAdmin } = require('./database/init')
 const { router } = require('./middlewares/router')
 const { parcel } = require('./middlewares/parcel')
-const { bodyparser, logger } = require('./middlewares/common')
+const { bodyparser, logger, genSession:session } = require('./middlewares/common')
 
 // 等待数据库连接
 ;(async () => {
@@ -24,6 +24,7 @@ const { bodyparser, logger } = require('./middlewares/common')
   const app = new Koa()
   await bodyparser(app)
   await logger(app)
+  await session(app)
   await router(app)
   await parcel(app)
 

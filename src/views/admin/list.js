@@ -106,7 +106,7 @@ export default class List extends Component {
   _getAllMovive = () => {
     request({
       method: 'get',
-      url: `/api/v0/movies`,
+      url: `/api/v0/admin/movies`,
     })
     .then(res => {
       res.forEach((item, index) => {

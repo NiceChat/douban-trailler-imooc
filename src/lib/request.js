@@ -14,7 +14,12 @@ const _request = (params = {}, fn = () => {}) => {
       const { success, data, error, code } = res.data
 
       if (code === 401) {
-        window.location.href = '/'
+        message.error(String(error))
+
+        setTimeout(() => {
+          window.location.href = '/login'
+        },2000)
+
         return
       }
 

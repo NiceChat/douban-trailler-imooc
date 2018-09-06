@@ -32,6 +32,7 @@ export class adminController {
     if (matchData.match) {
       const user = matchData.user
 
+      ctx.session.user = user
       return (ctx.body = {
         success: true,
         msg: '登录成功！',
@@ -57,5 +58,4 @@ export class adminController {
       success: true
     }
   }
-
 }
