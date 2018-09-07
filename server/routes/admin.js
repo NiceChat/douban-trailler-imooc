@@ -1,7 +1,6 @@
 import {
   post,
   controller,
-  del,
   get,
   auth,
   role
@@ -50,6 +49,7 @@ export class adminController {
 
   @get('/movies')
   @auth
+  @role('admin')
   async getMoviesList(ctx, next) {
     const movies = await getAllMoives()
 

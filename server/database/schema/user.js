@@ -31,6 +31,10 @@ const userSchema = new Schema({
     type: Number,
     default: 1,
   },
+  role: {
+    type: String,
+    default: 'user',
+  },
   meta: {
     createTime: {
       type: Date,

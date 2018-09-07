@@ -109,3 +109,17 @@ export const auth = convert(async (ctx, next) => {
 
   await next()
 })
+
+export const role = expectRole => convert(async (ctx, next)=> {
+  const user = ctx.session.user
+
+  if (!user && user.role !== expectRole) {
+    return (
+      ctx.body = {
+        success: false,
+        code: 403,
+        error: '权限不足,请联系管理员。'
+      }
+    )
+  }
+})

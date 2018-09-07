@@ -16,7 +16,7 @@ const connect = () => {
     mongoose.connection.on('error', () => {
       if (maxConnectTimes < 5) {
         maxConnectTimes++
-        mongoose.connect(db)  
+        mongoose.connect(db)
       } else {
         throw new Error('Conencted Error!')
         reject()
@@ -26,7 +26,7 @@ const connect = () => {
     mongoose.connection.on('disconnected', () => {
       if (maxConnectTimes < 5) {
         maxConnectTimes++
-        mongoose.connect(db)  
+        mongoose.connect(db)
       } else {
         throw new Error('Conencted Lost!')
         reject()
@@ -54,8 +54,9 @@ const initAdmin = async () => {
   if (!user) {
     user = new User({
       username: 'admin',
-      password: '123456',
+      password: 'admin12',
       email: 'oddboy1990@gmail.com',
+      role: 'admin'
     })
 
     await user.save()
