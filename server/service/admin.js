@@ -16,7 +16,6 @@ export const checkPassword = async (email, password) => {
 }
 
 export const addNewUser = async ({ email, userName, password }) => {
-  console.log( email )
   const User = mongoose.model('User')
   let user = await User.findOne({ email: email })
 
