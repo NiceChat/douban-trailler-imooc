@@ -14,3 +14,30 @@ export const checkPassword = async (email, password) => {
     user
   }
 }
+
+export const addNewUser = async ({ email, userName, password }) => {
+  console.log( email )
+  const User = mongoose.model('User')
+  let user = await User.findOne({ email: email })
+
+  if (!user) {
+    user = new User({
+      email,
+      username: userName,
+      password,
+      role: 'user'
+    })
+
+    await user.save()
+
+    return ({
+      success: true,
+      user,
+    })
+  }
+
+  return ({
+    success: false,
+    error: '该账户已存在'
+  })
+}

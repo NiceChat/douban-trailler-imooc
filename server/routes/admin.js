@@ -7,7 +7,8 @@ import {
 } from '../lib/decorator'
 
 import {
-  checkPassword
+  checkPassword,
+  addNewUser,
 } from '../service/admin'
 
 import {
@@ -57,5 +58,31 @@ export class adminController {
       data: movies,
       success: true
     }
+  }
+
+  @post('/register')
+  async setUser(ctx, next) {
+    const { userName, password, checkPassword, email } = ctx.request.body
+
+    if (password !== checkPassword) {
+      return (ctx.body = {
+        success: false,
+        error: '输入密码不一致，请重新输入。'
+      })
+    }
+
+    const newUser = await addNewUser({ userName, password, email})
+
+    if (newUser.isSuccess) {
+      return (ctx.body = {
+        data: newUser.user,
+        success: true
+      })
+    }
+
+    return (ctx.body = {
+      success: false,
+      error: newUser.error
+    })
   }
 }
