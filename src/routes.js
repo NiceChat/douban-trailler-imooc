@@ -26,4 +26,9 @@ export default [
     path: '/admin/list',
     component: AC(() => require('./views/admin/list'))
   },
+  {
+    name: '注册',
+    path: '/register',
+    component: AC(() => require('./views/admin/register'))
+  },
 ]

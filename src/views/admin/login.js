@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Form, Icon, Input, Button, Checkbox } from 'antd'
 import { request } from '../../lib'
+import { Link } from 'react-router-dom'
 
 const FormItem = Form.Item
 
@@ -35,14 +36,18 @@ export default class Login extends Component {
       <Card
         title="欢迎登录管理后台"
         hoverable={false}
+        extra={<span>尚未注册,<Link to='/register'>去注册</Link></span>}
         style={{ width: 450, margin: '120px auto 0 auto' }}
       >
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem>
             {getFieldDecorator('email', {
-              rules: [{ required: true, message: 'Please input your Email!' }],
+              rules: [
+                { required: true, message: 'Please input your Email!' },
+                { type: 'regexp', RegExp: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/, required: true, message: 'Please input correct Email!' },
+              ],
             })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="email" />
+              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
             )}
           </FormItem>
 

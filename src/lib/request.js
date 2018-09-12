@@ -20,7 +20,7 @@ const _request = (params = {}, fn = () => {}) => {
           window.location.href = '/login'
         },2000)
 
-        return
+        return Promise.reject()
       }
 
       if (success) {
@@ -34,6 +34,8 @@ const _request = (params = {}, fn = () => {}) => {
     .catch(error => {
       fn(false)
       message.error(String(error || '网络错误'))
+
+      return Promise.reject(error)
     })
 }
 

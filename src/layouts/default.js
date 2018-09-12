@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Spin, Menu } from "antd"
 import navRoutes from '../nav'
+import User from './user'
 
 const getMenuContent = ({ path, name }) => {
   const search = window.location.search
@@ -18,9 +19,12 @@ export default class LayoutDefault extends Component {
   constructor (props) {
     super(props)
 
+    const userStr = localStorage.getItem('user')
+
     this.state = {
       loading: false,
-      tip: 'waiting a moment.'
+      tip: 'waiting a moment.',
+      user: JSON.parse(userStr)
     }
   }
 
@@ -47,7 +51,7 @@ export default class LayoutDefault extends Component {
 
   render() {
     const { children } = this.props
-    const { tip, loading } = this.state
+    const { tip, loading, user } = this.state
 
     return (
       <div
@@ -90,6 +94,18 @@ export default class LayoutDefault extends Component {
               </Menu.Item>
             ))
           }
+
+          <Menu.Item
+            style={{
+              marginLeft: 10,
+              marginRirght: 10,
+              fontSize: 14,
+              color: '#fff',
+              textAlign: 'center',
+              float: 'right',
+            }}>
+            <User user={user}/>
+          </Menu.Item>
         </Menu>
 
         <Spin

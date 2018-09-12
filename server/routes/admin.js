@@ -34,6 +34,7 @@ export class adminController {
 
       ctx.session.user = user
       return (ctx.body = {
+        code: 200,
         success: true,
         msg: '登录成功！',
         user,
@@ -42,6 +43,7 @@ export class adminController {
 
     if (!matchData.match) {
       return (ctx.body = {
+        code: 201,
         success: false,
         error: '密码错误'
       })
@@ -62,25 +64,29 @@ export class adminController {
 
   @post('/register')
   async setUser(ctx, next) {
-    const { userName, password, checkPassword, email } = ctx.request.body
+    const { userName, password, confirmPassword, email } = ctx.request.body
 
-    if (password !== checkPassword) {
+    console.log(password, confirmPassword)
+    if (password !== confirmPassword) {
       return (ctx.body = {
+        code: 201,
         success: false,
         error: '输入密码不一致，请重新输入。'
       })
     }
 
-    const newUser = await addNewUser({ userName, password, email})
+    const newUser = await addNewUser({ userName, password, email })
 
-    if (newUser.isSuccess) {
+    if (newUser.success) {
       return (ctx.body = {
+        code: 200,
         data: newUser.user,
         success: true
       })
     }
 
     return (ctx.body = {
+      code: 201,
       success: false,
       error: newUser.error
     })
