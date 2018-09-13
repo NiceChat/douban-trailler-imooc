@@ -36,6 +36,15 @@ export default class LayoutDefault extends Component {
     window.__LOADING__ = null
   }
 
+  componentDidUpdate (prevProps) {
+    if (this.props !== prevProps) {
+      const userStr = localStorage.getItem('user')
+      this.setState({
+        user: JSON.parse(userStr)
+      })
+    }
+  }
+
   matchRouteName = this.props.match
     ? navRoutes.find(e => e.name === this.props.match.params.type)
       ? navRoutes.find(e => e.name === this.props.match.params.type).name

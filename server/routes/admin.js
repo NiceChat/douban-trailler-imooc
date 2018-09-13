@@ -37,7 +37,7 @@ export class adminController {
         code: 200,
         success: true,
         msg: '登录成功！',
-        user,
+        data: user,
       })
     }
 
@@ -89,6 +89,24 @@ export class adminController {
       code: 201,
       success: false,
       error: newUser.error
+    })
+  }
+
+  @post('/logout')
+  async logout(ctx, next) {
+    const { user } = ctx.session
+
+    if (!user) {
+      return (ctx.body = {
+        success: false,
+        error: '您尚未登录',
+      })
+    }
+
+    ctx.session.user = null
+    return ( ctx.body = {
+      success: true,
+      error: ''
     })
   }
 }

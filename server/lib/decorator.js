@@ -122,4 +122,6 @@ export const role = expectRole => convert(async (ctx, next)=> {
       }
     )
   }
+
+  await next()
 })

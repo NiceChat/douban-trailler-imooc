@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
-import { Icon, } from 'antd'
+import { message, Menu, Dropdown } from 'antd'
 import { Link } from 'react-router-dom'
+import { request } from '../lib'
 
 export default class Detail extends Component {
   constructor(props) {
     super(props)
+  }
+
+  handleMenuClick() {
+    request({
+      method: 'post',
+      url: '/api/v0/admin/logout',
+    })
+    .then(res => {
+      message.success('成功退出')
+      localStorage.clear('user')
+      window.location.href = window.location.origin + '/moives'
+    })
   }
 
   render() {
@@ -18,10 +31,21 @@ export default class Detail extends Component {
       )
     }
 
+    const menu = (
+      <Menu
+        style={{ width: '100px', }}
+        onClick={this.handleMenuClick}>
+        <Menu.Item key="1">退出</Menu.Item>
+      </Menu>
+    )
+
     return (
       <div>
-        <Icon type="user" theme="filled" />
-        <span>{user.name}</span>
+        <Dropdown overlay={menu}>
+          <div>
+          Hi,<span>{user.username}</span>
+          </div>
+        </Dropdown>
       </div>
     )
   }
