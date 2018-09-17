@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { request } from '../../lib'
-import { Table, Tag, Popconfirm } from 'antd'
+import { Table, Tag, Popconfirm, message } from 'antd'
 import Layout from '../../layouts/default'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
@@ -80,7 +80,9 @@ export default class List extends Component {
           render: (text, record) => {
             return (
               <div>
-                <a href='javascript:;'>详情</a>
+                <a
+                  onClick={() => this.detail(record)}
+                  href='javascript:;'>详情</a>
 
                 <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record)}>
                   <a
@@ -100,7 +102,20 @@ export default class List extends Component {
   }
 
   handleDelete(record) {
-    console.log(record)
+    const { _id } = record
+    request({
+      method: 'delete',
+      url: `/api/v0/admin/del/${_id}`
+    })
+    .then(() => {
+      message.success('删除成功!')
+      this._getAllMovive()
+    })
+  }
+
+  detail(record) {
+    const { _id } = record
+    this.props.history.push(`/detail/${_id}`)
   }
 
   _getAllMovive = () => {
@@ -108,13 +123,9 @@ export default class List extends Component {
       method: 'get',
       url: `/api/v0/admin/movies`,
     })
-    .then(res => {
-      res.forEach((item, index) => {
-        item.key = index
-      })
-
+    .then(data => {
       this.setState({
-        movies: res,
+        movies: data,
         loading: false,
       })
     })
@@ -137,6 +148,7 @@ export default class List extends Component {
         <div className='flex-row full'>
           <div className='scroll-y align-self-start'>
             <Table
+              rowKey={record => record._id}
               dataSource={movies}
               columns={columns}
               bordered />

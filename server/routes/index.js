@@ -1,6 +1,5 @@
 import {
   get,
-  post,
   controller
 } from '../lib/decorator'
 

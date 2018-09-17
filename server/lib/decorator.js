@@ -125,3 +125,30 @@ export const role = expectRole => convert(async (ctx, next)=> {
 
   await next()
 })
+
+export const request = rules => convert(async (ctx, next) => {
+    let errors = []
+    let body
+    const method = ctx.method.toLocaleLowerCase()
+
+    if(method === 'get') {
+      body = ctx.query || ctx.params
+    } else if(method === 'post'){
+      body = ctx.request.body
+    } else {
+      body = ctx.params
+    }
+
+    body = Object.keys(body)
+    errors = rules.filter(rule => !body.includes(rule))
+
+    console.log(errors)
+    if (errors.length) {
+      return (ctx.body = {
+        code: 501,
+        error: `参数错误，${errors.join(',')} is request.`
+      })
+    }
+
+    await next()
+  })

@@ -16,7 +16,7 @@ export default class Detail extends Component {
     .then(res => {
       message.success('成功退出')
       localStorage.clear('user')
-      window.location.href = window.location.origin + '/moives'
+      window.location.href = window.location.origin
     })
   }
 
@@ -27,7 +27,7 @@ export default class Detail extends Component {
       return (
         <Link
           style={{ color: '#fff', fontSize: '12px' }}
-          to='/register'>请注册</Link>
+          to='/login'>登录</Link>
       )
     }
 

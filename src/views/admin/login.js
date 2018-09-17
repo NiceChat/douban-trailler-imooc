@@ -24,7 +24,14 @@ export default class Login extends Component {
         })
         .then((res) => {
           localStorage.setItem('user', JSON.stringify(res))
-          this.props.history.push('/admin/list')
+          const { role } = res
+
+          if (role === 'admin') {
+            this.props.history.push('/admin/list')
+            return
+          }
+
+          this.props.history.push(`/`)
         })
       }
     })

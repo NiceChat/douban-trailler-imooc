@@ -34,3 +34,26 @@ export const getRelativeMovies = async (movie) => {
 
   return movies
 }
+
+export const deleteMovie = async ({ id }) => {
+  const movie = await Movie.findOne({_id: id})
+
+  if (movie) {
+    await Movie.findOneAndRemove({
+      _id: id
+    })
+
+    return ({
+      code: 200,
+      success: true,
+      error: '',
+    })
+  }
+
+
+  return ({
+    code: 201,
+    success: false,
+    error: `${id}不存在, 无法删除.`,
+  })
+}

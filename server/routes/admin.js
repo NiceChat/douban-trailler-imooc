@@ -3,7 +3,9 @@ import {
   controller,
   get,
   auth,
-  role
+  role,
+  del,
+  request
 } from '../lib/decorator'
 
 import {
@@ -13,11 +15,16 @@ import {
 
 import {
   getAllMoives,
+  deleteMovie,
 } from '../service/movies'
 
 @controller('/api/v0/admin')
 export class adminController {
   @post('/login')
+  @request([
+    'email',
+    'password'
+  ])
   async check(ctx) {
     const { email, password } = ctx.request.body
     const matchData = await checkPassword(email, password)
@@ -107,6 +114,21 @@ export class adminController {
     return ( ctx.body = {
       success: true,
       error: ''
+    })
+  }
+
+  @del('/del/:id')
+  @auth
+  @role('admin')
+  @request(['id'])
+  async del(ctx, next) {
+    const { id } = ctx.params
+    const result = await deleteMovie({ id })
+
+    return (ctx.body = {
+      code: result.code,
+      success: result.success,
+      error: result.error,
     })
   }
 }
